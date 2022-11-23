@@ -7,7 +7,7 @@
     "args": { "VARIANT": "18" }
   },
   // コンテナの名前を指定
-  "runArgs": ["--name", "map-front"],
+  "runArgs": ["--name", "graph-front"],
   "customizations": {
     "vscode": {
       "settings": {},
@@ -16,7 +16,7 @@
   },
   "portsAttributes": {
     "3000": {
-      "label": "dev-map-front",
+      "label": "dev-graph-front",
       "onAutoForward": "openBrowser"
     }
   },

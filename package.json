@@ -1,5 +1,5 @@
 {
-  "name": "map-front",
+  "name": "graph-front",
   "version": "1.0.0",
   "description": "Graph by RESAS API",
   "type": "module",

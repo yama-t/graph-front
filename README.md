@@ -1,10 +1,10 @@
-# map-front
+# graph-front
 
 都道府県別の総人口推移グラフを表示する SPA
 
 ## 環境構築
 
-[wiki](https://github.com/yama-t/map-front/wiki)に記載。
+[wiki](https://github.com/yama-t/graph-front/wiki)に記載。
 
 ## 作業開始
 
