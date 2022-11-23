@@ -5,12 +5,12 @@
 [wiki](https://github.com/yama-t/map-front/wiki)に記載。
 
 ## 作業開始
-VSCodeのdevContainerを使用します。
+VSCodeの拡張機能「Dev Containers」を使用します。
 
 ### 1. Dockerを起動する
 デスクトップのDockerを起動します。
 
-### 2. VSCodeでRemote Containersを起動する
+### 2. VSCodeでDev Containersを起動する
 VSCodeを起動後、左下の緑色の部分をクリック。
 
 ![vscode_remote_container](https://user-images.githubusercontent.com/7401408/203480962-ab1b9813-e7c7-4e64-b9cb-c2db9544a15f.png)
