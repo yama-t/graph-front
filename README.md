@@ -24,6 +24,12 @@ Open Folder in Containerを選択し、クローンしたプロジェクトの�
 - 開発サーバーの起動
 - ブラウザでの表示
 
+### 備考
+一度、VSCodeでDev Containersを利用すると、「作業の開始」タブに「（フォルダ名）[Dev Container]」の履歴が残る。
+次からはそこをクリックして開始することも可能。
+
+![start](https://user-images.githubusercontent.com/7401408/203496907-d9b07157-1810-4b8c-a49a-de4afc0b9867.png)
+
 ## コンテナの再起動
 VSCode左下の緑色の部分をクリックし、「Rebuild Container」を選択する。
 
