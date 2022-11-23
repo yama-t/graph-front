@@ -1,0 +1,2 @@
+ARG VARIANT="18"
+FROM node:${VARIANT}

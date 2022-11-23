@@ -1,0 +1,38 @@
+{
+  "name": "Node.js",
+  "build": {
+    // イメージ作成に使用するDockerfileの指定
+    "dockerfile": "Dockerfile",
+    // 変数の上書き設定
+    "args": { "VARIANT": "18" }
+  },
+  // コンテナの名前を指定
+  "runArgs": ["--name", "map-front"],
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    }
+  },
+  "portsAttributes": {
+    "3000": {
+      "label": "dev-map-front",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "yarn install && yarn dev",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+  }
+}
