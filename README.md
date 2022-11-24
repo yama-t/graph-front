@@ -35,7 +35,7 @@ Open Folder in Container を選択し、クローンしたプロジェクトの�
 一度、VSCode で Dev Containers を利用すると、「作業の開始」タブに「（フォルダ名）[Dev Container]」の履歴が残る。
 次からはそこをクリックして開始することも可能。
 
-![start](https://user-images.githubusercontent.com/7401408/203496907-d9b07157-1810-4b8c-a49a-de4afc0b9867.png)
+![start](https://user-images.githubusercontent.com/7401408/203691960-cfb47928-28a6-4e56-9894-10475efe05d8.png)
 
 ## コンテナの再起動
 
@@ -48,6 +48,8 @@ VSCode 左下の緑色の部分をクリックし、「リモート接続を終�
 ## デプロイ
 
 `master` ブランチ に変更が加わると、GitHub Actions が稼働し、自動でデプロイされます。
+
+変更しても自動デプロイの対象にならないフォルダ・ファイル設定は `.github/workflows/pages.yml` の `paths-ignore` に記載。
 
 ## コマンド
 
