@@ -14,6 +14,11 @@ export default defineConfig({
       exclude: /\.stories\.(t|j)sx?$/,
     }),
   ],
+  resolve: {
+    alias: {
+      "@/": `${__dirname}/src/`,
+    },
+  },
   test: {
     globals: true,
     environment: "happy-dom",
