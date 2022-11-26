@@ -16,4 +16,12 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   rules: {},
+  settings: {
+    "import/resolver": {
+      alias: {
+        map: [["@", "./src"]],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
+  },
 };
