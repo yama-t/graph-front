@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
+
+type PrefCode = number;
+type PrefName = string;
+type Prefectures = Array<Prefecture>;
+type PrefCodes = Array<PrefCode>;
+
+interface Prefecture {
+  prefCode: PrefCode;
+  prefName: PrefName;
+}
+
 const apiEndPoint = "https://opendata.resas-portal.go.jp";
 const getPrefecturesApi = "/api/v1/prefectures";
 const getPrefecturesUrl = apiEndPoint + getPrefecturesApi;
 
-interface Prefecture {
-  prefCode: number;
-  prefName: string;
-}
-
 export default function PopuLationGraph() {
-  const [prefectures, setPrefectures] = useState<Array<Prefecture>>([]);
+  const [prefectures, setPrefectures] = useState<Prefectures>([]);
+  const [prefCodes, setPrefCodes] = useState<PrefCodes>([]);
 
   const getPrefectures = async () => {
     const response = await fetch(getPrefecturesUrl, {
@@ -22,6 +29,16 @@ export default function PopuLationGraph() {
   useEffect(() => {
     getPrefectures();
   }, []);
+
+  const checkPrefecture = function (input: string) {
+    const changeCode = Number(input);
+    const newPrefCodes = prefCodes.includes(changeCode)
+      ? // チェックした値が既に含まれている場合は、保持している配列から取り除く
+        prefCodes.filter((item) => item !== changeCode)
+      : // 含まれていない場合は、保持している配列に追加する
+        [...prefCodes, changeCode];
+    setPrefCodes(newPrefCodes);
+  };
 
   return (
     <>
@@ -37,6 +54,7 @@ export default function PopuLationGraph() {
                     name="prefecture"
                     value={prefecture.prefCode}
                     className="prefecture-checkbox"
+                    onChange={(e) => checkPrefecture(e.target.value)}
                   />
                   {prefecture.prefName}
                 </label>
