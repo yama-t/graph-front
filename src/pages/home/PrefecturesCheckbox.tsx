@@ -1,13 +1,5 @@
 import React from "react";
-
-type PrefCode = number;
-type PrefName = string;
-type Prefectures = Array<Prefecture>;
-
-interface Prefecture {
-  prefCode: PrefCode;
-  prefName: PrefName;
-}
+import { Prefectures } from "@/types/prefecture";
 
 interface Props {
   prefectures: Prefectures;

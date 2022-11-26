@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Prefectures, PrefCodes } from "@/types/prefecture";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
-
-type PrefCode = number;
-type PrefName = string;
-type Prefectures = Array<Prefecture>;
-type PrefCodes = Array<PrefCode>;
-
-interface Prefecture {
-  prefCode: PrefCode;
-  prefName: PrefName;
-}
 
 const apiEndPoint = "https://opendata.resas-portal.go.jp";
 const getPrefecturesApi = "/api/v1/prefectures";
