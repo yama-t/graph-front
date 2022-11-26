@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PrefectureCheckbox from "./PrefecturesCheckbox";
 
 type PrefCode = number;
 type PrefName = string;
@@ -44,24 +45,10 @@ export default function PopuLationGraph() {
     <>
       <section className="graph-section">
         <h2 className="section-title">都道府県</h2>
-        <ul className="prefectures">
-          {prefectures &&
-            prefectures.map((prefecture, i) => (
-              <li key={i} className="prefecture-items">
-                <label className="prefecture-label">
-                  <input
-                    type="checkbox"
-                    name="prefecture"
-                    value={prefecture.prefCode}
-                    className="prefecture-checkbox"
-                    onChange={(e) => checkPrefecture(e.target.value)}
-                  />
-                  {prefecture.prefName}
-                </label>
-              </li>
-            ))}
-          ;
-        </ul>
+        <PrefectureCheckbox
+          prefectures={prefectures}
+          onCnangeFunction={checkPrefecture}
+        />
       </section>
       <div className="graph"></div>
     </>
