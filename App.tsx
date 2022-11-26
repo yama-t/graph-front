@@ -3,8 +3,8 @@ import Home from "./src/pages/home";
 
 export default function App() {
   return (
-    <div className="App">
+    <main className="App">
       <Home />
-    </div>
+    </main>
   );
 }
