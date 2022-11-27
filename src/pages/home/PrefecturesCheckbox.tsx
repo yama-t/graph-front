@@ -3,7 +3,7 @@ import { Prefectures } from "@/types/prefecture";
 
 interface Props {
   prefectures: Prefectures;
-  onCnangeFunction: (value: string) => void;
+  onCnangeFunction: (checkboxValue: string) => void;
 }
 
 export default function PrefectureCheckbox({
