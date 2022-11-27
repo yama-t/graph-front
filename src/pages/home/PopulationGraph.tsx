@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Prefectures, PrefCodes, PrefCode } from "@/types/prefecture";
+import { Prefectures, PrefName, PrefCode } from "@/types/prefecture";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
 import Graph from "./Graph";
 
@@ -12,7 +12,7 @@ const getPopulationUrl = apiEndPoint + getPopulationApi;
 
 export default function PopuLationGraph() {
   const [prefectures, setPrefectures] = useState<Prefectures>([]);
-  const [prefCodes, setPrefCodes] = useState<PrefCodes>([]);
+  const [prefecturesPopulation, setPrefecturesPopulation] = useState([]);
 
   const getPrefectures = async () => {
     const response = await fetch(getPrefecturesUrl, {
@@ -22,31 +22,71 @@ export default function PopuLationGraph() {
     setPrefectures(jsonData.result);
   };
 
-  const getPopulation = async (prefCode: PrefCode) => {
+  const checkPrefecture = function (prefName: PrefName, checkboxValue: string) {
+    const prefCode: PrefCode = Number(checkboxValue);
+    // isChecked:true（値が配列に含まれていない）
+    // isChecked:false（値が既に配列に含まれている）
+    const isChecked = !prefecturesPopulation.some(
+      (data) => data.prefCode === prefCode
+    );
+    // チェックを付けた場合だけ人口を取得する
+    if (isChecked) {
+      getPopulation(prefName, prefCode);
+    } else {
+      // チェックを外した場合はデータを取り除く
+      removePopulation(prefCode);
+    }
+  };
+
+  const getPopulation = async (prefName: PrefName, prefCode: PrefCode) => {
     const params = new URLSearchParams({ prefCode: `${prefCode}` });
     const getUrl = `${getPopulationUrl}?${params}`;
     const response = await fetch(getUrl, {
       headers: { "X-API-KEY": apiKey },
     });
     const jsonData = await response.json();
+    addPopulation(prefName, prefCode, jsonData.result);
   };
 
-  const checkPrefecture = function (input: string) {
-    const changeCode = Number(input);
-    // isChecked:true（値が配列に含まれていない）
-    // isChecked:false（値が既に配列に含まれている）
-    const isChecked = !prefCodes.includes(changeCode);
-    const newPrefCodes = isChecked
-      ? // チェックを付けた場合は、保持している配列に追加する
-        [...prefCodes, changeCode]
-      : // チェックを外した場合は、保持している配列から取り除く
-        prefCodes.filter((item) => item !== changeCode);
-    setPrefCodes(newPrefCodes);
+  const createPopulationData = function (
+    prefName: PrefName,
+    prefCode: PrefCode,
+    populationData
+  ) {
+    const totalPopulation = populationData?.data[0]?.data ?? [];
+    return {
+      prefName,
+      prefCode,
+      data: totalPopulation,
+    };
+  };
 
-    // チェックを付けた場合だけ人口を取得する（外した場合は動作しない）
-    if (isChecked) {
-      getPopulation(changeCode);
-    }
+  const addPopulation = function (
+    prefName: PrefName,
+    prefCode: PrefCode,
+    populationData
+  ) {
+    // 都道府県名と都道府県コードを加えたデータを生成して配列に追加する
+    const newPopulationData = createPopulationData(
+      prefName,
+      prefCode,
+      populationData
+    );
+    const newPrefecturesPopulation = [
+      ...prefecturesPopulation,
+      newPopulationData,
+    ];
+    setPrefecturesPopulation(newPrefecturesPopulation);
+  };
+
+  const removePopulation = function (prefCode: PrefCode) {
+    // prefCodeが一致するデータを取り除く
+    const index = prefecturesPopulation.findIndex(
+      (item) => item.prefCode === prefCode
+    );
+    const newPrefecturesPopulation = prefecturesPopulation.slice();
+    newPrefecturesPopulation.splice(index, 1);
+    setPrefecturesPopulation(newPrefecturesPopulation);
   };
 
   useEffect(() => {
