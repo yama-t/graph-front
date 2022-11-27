@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Prefectures, PrefCodes } from "@/types/prefecture";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
+import Graph from "./Graph";
 
 const apiEndPoint = "https://opendata.resas-portal.go.jp";
 const getPrefecturesApi = "/api/v1/prefectures";
@@ -36,12 +37,18 @@ export default function PopuLationGraph() {
     <>
       <section className="graph-section">
         <h2 className="section-title">都道府県</h2>
+        <p className="explain">
+          都道府県を選択すると、人口推移が表示されます（複数選択可）
+        </p>
         <PrefectureCheckbox
           prefectures={prefectures}
           onCnangeFunction={checkPrefecture}
         />
       </section>
-      <div className="graph"></div>
+      <section className="graph-section">
+        <h2 className="section-title">人口推移</h2>
+        <Graph />
+      </section>
     </>
   );
 }
