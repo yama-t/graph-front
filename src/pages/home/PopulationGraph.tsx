@@ -33,18 +33,18 @@ export default function PopuLationGraph() {
 
   const checkPrefecture = function (input: string) {
     const changeCode = Number(input);
-    // チェックを外した場合：true（配列に既に含まれている）
-    // チェックを付けた場合：false（配列に含まれていない）
-    const isIncludes = prefCodes.includes(changeCode);
-    const newPrefCodes = isIncludes
-      ? // チェックした値が既に含まれている場合は、保持している配列から取り除く
-        prefCodes.filter((item) => item !== changeCode)
-      : // 含まれていない場合は、保持している配列に追加する
-        [...prefCodes, changeCode];
+    // isChecked:true（値が配列に含まれていない）
+    // isChecked:false（値が既に配列に含まれている）
+    const isChecked = !prefCodes.includes(changeCode);
+    const newPrefCodes = isChecked
+      ? // チェックを付けた場合は、保持している配列に追加する
+        [...prefCodes, changeCode]
+      : // チェックを外した場合は、保持している配列から取り除く
+        prefCodes.filter((item) => item !== changeCode);
     setPrefCodes(newPrefCodes);
 
     // チェックを付けた場合だけ人口を取得する（外した場合は動作しない）
-    if (!isIncludes) {
+    if (isChecked) {
       getPopulation(changeCode);
     }
   };
