@@ -15,7 +15,18 @@ export default function Graph() {
   const options: Highcharts.Options = {
     title: { text: graphTitle },
     xAxis: { title: { text: xAxisText }, categories },
-    yAxis: { title: { text: yAxisText } },
+    yAxis: {
+      title: {
+        text: yAxisText,
+        // ラベルを上部に水平表示する
+        align: "high",
+        offset: 0,
+        rotation: 0,
+        y: 10,
+      },
+      lineWidth: 1,
+      tickWidth: 1,
+    },
     series,
   };
 
