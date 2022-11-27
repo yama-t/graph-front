@@ -3,7 +3,6 @@ name: Deploy GitHub Pages by Node.js
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["master", "dev"]
     paths-ignore:
       - ".devcontainer/**"
       - ".gitignore"
