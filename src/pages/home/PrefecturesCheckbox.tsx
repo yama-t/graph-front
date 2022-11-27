@@ -10,24 +10,25 @@ export default function PrefectureCheckbox({
   prefectures,
   onCnangeFunction,
 }: Props) {
-  return (
-    <ul className="prefectures">
-      {prefectures &&
-        prefectures.map((prefecture, i) => (
-          <li key={i} className="prefecture-items">
-            <label className="prefecture-label">
-              <input
-                type="checkbox"
-                name="prefecture"
-                value={prefecture.prefCode}
-                className="prefecture-checkbox"
-                onChange={(e) => onCnangeFunction(e.target.value)}
-              />
-              {prefecture.prefName}
-            </label>
-          </li>
-        ))}
-      ;
-    </ul>
-  );
+  const labelName = "prefecture";
+  const prefectureItems = prefectures.map((prefecture, i) => {
+    const prefCode = prefecture.prefCode;
+    const labelId = `${labelName}${prefCode}`;
+    return (
+      <li key={i} className="prefecture-items">
+        <input
+          type="checkbox"
+          name={labelName}
+          id={labelId}
+          value={prefCode}
+          className="prefecture-checkbox"
+          onChange={(e) => onCnangeFunction(e.target.value)}
+        />
+        <label className="prefecture-label" htmlFor={labelId}>
+          {prefecture.prefName}
+        </label>
+      </li>
+    );
+  });
+  return <ul className="prefectures">{prefectures && prefectureItems}</ul>;
 }
