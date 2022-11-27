@@ -22,8 +22,7 @@ export default function PopuLationGraph() {
     setPrefectures(jsonData.result);
   };
 
-  const checkPrefecture = function (prefName: PrefName, checkboxValue: string) {
-    const prefCode: PrefCode = Number(checkboxValue);
+  const checkPrefecture = function (prefName: PrefName, prefCode: PrefCode) {
     // isChecked:true（値が配列に含まれていない）
     // isChecked:false（値が既に配列に含まれている）
     const isChecked = !prefecturesPopulation.some(

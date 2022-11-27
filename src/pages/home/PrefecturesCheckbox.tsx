@@ -1,9 +1,9 @@
 import React from "react";
-import { Prefectures, PrefName } from "@/types/prefecture";
+import { Prefectures, PrefName, PrefCode } from "@/types/prefecture";
 
 interface Props {
   prefectures: Prefectures;
-  onCnangeFunction: (prefName: PrefName, checkboxValue: string) => void;
+  onCnangeFunction: (prefName: PrefName, prefCode: PrefCode) => void;
 }
 
 export default function PrefectureCheckbox({
@@ -22,7 +22,7 @@ export default function PrefectureCheckbox({
           id={labelId}
           value={prefCode}
           className="prefecture-checkbox"
-          onChange={(e) => onCnangeFunction(prefName, e.target.value)}
+          onChange={() => onCnangeFunction(prefName, prefCode)}
         />
         <label className="prefecture-label" htmlFor={labelId}>
           {prefName}
