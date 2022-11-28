@@ -13,6 +13,12 @@ const maxYear = 2025; // X軸の最大値（年度）
 const pointInterval = 10; // グラフの点を描画する間隔（年）
 const xAxisTickInterval = 10; // X軸の目盛り間隔（年）
 const yAxisTickInterval = 1000000; // Y軸の目盛り間隔（人）
+// 凡例の位置設定
+const legend: Highcharts.LegendOptions = {
+  layout: "vertical",
+  align: "right",
+  verticalAlign: "top",
+};
 
 interface Props {
   data: PrefecturePopulation[];
@@ -101,6 +107,7 @@ export default function Graph({ data }: Props) {
       min: 0,
     },
     series,
+    legend,
     plotOptions: {
       series: {
         pointStart,
