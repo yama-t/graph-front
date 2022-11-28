@@ -25,6 +25,7 @@ export default function PopuLationGraph() {
   const checkPrefecture = function (prefName: PrefName, prefCode: PrefCode) {
     // isChecked:true（値が配列に含まれていない）
     // isChecked:false（値が既に配列に含まれている）
+    // 配列の要素がオブジェクトなので、someを使って判定
     const isChecked = !prefecturesPopulation.some(
       (data) => data.prefCode === prefCode
     );
