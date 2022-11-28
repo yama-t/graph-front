@@ -12,6 +12,11 @@ interface Props {
   data: PrefecturePopulation[];
 }
 
+interface PopulationData {
+  categories: Highcharts.XAxisOptions["categories"];
+  series: Highcharts.SeriesOptionsType[];
+}
+
 /*
 ## categories
 ["1960", "1965", "1970", "1975", "1980"]...
@@ -31,7 +36,9 @@ interface Props {
     ...
  ]
 */
-const createPopulationData = function (rawData: PrefecturePopulation[]) {
+const createPopulationData = function (
+  rawData: PrefecturePopulation[]
+): PopulationData {
   // X軸（年）
   const categories: Highcharts.XAxisOptions["categories"] = [];
   // Y軸（人口）
@@ -56,11 +63,11 @@ const createPopulationData = function (rawData: PrefecturePopulation[]) {
     series = [{ type: "line", name: seriesDefaultName, data: [] }];
   }
 
-  return [categories, series];
+  return { categories, series };
 };
 
 export default function Graph({ data }: Props) {
-  const [categories, series] = createPopulationData(data);
+  const { categories, series } = createPopulationData(data);
   const options: Highcharts.Options = {
     title: { text: graphTitle },
     xAxis: { title: { text: xAxisText }, categories },
