@@ -36,7 +36,11 @@ export default function PopuLationGraph() {
     setPrefectures(jsonData.result);
   };
 
-  const checkPrefecture = function (prefName: PrefName, prefCode: PrefCode) {
+  const checkPrefecture = function (
+    checked: boolean,
+    prefName: PrefName,
+    prefCode: PrefCode
+  ) {
     // 連打対応。checkFlagが既にtrueの場合、処理を行わない
     if (checkFlag) {
       return;
@@ -44,14 +48,8 @@ export default function PopuLationGraph() {
 
     setCheckFlag(true);
 
-    // isChecked:true（値が配列に含まれていない）
-    // isChecked:false（値が既に配列に含まれている）
-    // 配列の要素がオブジェクトなので、someを使って判定
-    const isChecked = !prefecturesPopulation.some(
-      (data) => data.prefCode === prefCode
-    );
     // チェックを付けた場合だけ人口を取得する
-    if (isChecked) {
+    if (checked) {
       getPopulation(prefName, prefCode);
     } else {
       // チェックを外した場合はデータを取り除く

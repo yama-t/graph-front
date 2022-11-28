@@ -3,7 +3,11 @@ import { Prefecture, PrefName, PrefCode } from "@/types/prefecture";
 
 interface Props {
   prefectures: Prefecture[];
-  onCnangeFunction: (prefName: PrefName, prefCode: PrefCode) => void;
+  onCnangeFunction: (
+    checked: boolean,
+    prefName: PrefName,
+    prefCode: PrefCode
+  ) => void;
 }
 
 export default function PrefectureCheckbox({
@@ -27,7 +31,9 @@ export default function PrefectureCheckbox({
           id={inputId}
           value={prefCode}
           className="prefecture-checkbox"
-          onChange={() => onCnangeFunction(prefName, prefCode)}
+          onChange={(e) =>
+            onCnangeFunction(e.target.checked, prefName, prefCode)
+          }
         />
         <label className="prefecture-label" htmlFor={inputId}>
           {prefName}
