@@ -5,8 +5,14 @@ import { PrefecturePopulation } from "@/types/prefecture";
 
 const graphTitle = "";
 const seriesDefaultName = "都道府県名";
+const height = "600px"; // グラフ表示領域の高さ
 const xAxisText = "年度";
 const yAxisText = "人口数";
+const pointStart = 1960; // 描画を始めるX軸の年度
+const maxYear = 2025; // X軸の最大値（年度）
+const pointInterval = 10; // グラフの点を描画する間隔（年）
+const xAxisTickInterval = 10; // X軸の目盛り間隔（年）
+const yAxisTickInterval = 1000000; // Y軸の目盛り間隔（人）
 
 interface Props {
   data: PrefecturePopulation[];
@@ -70,7 +76,15 @@ export default function Graph({ data }: Props) {
   const { categories, series } = createPopulationData(data);
   const options: Highcharts.Options = {
     title: { text: graphTitle },
-    xAxis: { title: { text: xAxisText }, categories },
+    chart: {
+      height,
+    },
+    xAxis: {
+      title: { text: xAxisText },
+      categories,
+      max: maxYear,
+      tickInterval: xAxisTickInterval,
+    },
     yAxis: {
       title: {
         text: yAxisText,
@@ -83,8 +97,16 @@ export default function Graph({ data }: Props) {
       },
       lineWidth: 1,
       tickWidth: 1,
+      tickInterval: yAxisTickInterval,
+      min: 0,
     },
     series,
+    plotOptions: {
+      series: {
+        pointStart,
+        pointInterval,
+      },
+    },
   };
 
   return (
