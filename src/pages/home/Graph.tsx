@@ -13,6 +13,15 @@ const maxYear = 2025; // X軸の最大値（年度）
 const pointInterval = 10; // グラフの点を描画する間隔（年）
 const xAxisTickInterval = 10; // X軸の目盛り間隔（年）
 const yAxisTickInterval = 1000000; // Y軸の目盛り間隔（人）
+
+// Y軸表示のフォーマット設定
+const formatter = function (
+  this: Highcharts.AxisLabelsFormatterContextObject
+): string {
+  // 3桁区切りの数値で表示する
+  return Highcharts.numberFormat(this.pos, 0, "", ",");
+};
+
 // 凡例の位置設定
 const legend: Highcharts.LegendOptions = {
   layout: "vertical",
@@ -105,6 +114,7 @@ export default function Graph({ data }: Props) {
       tickWidth: 1,
       tickInterval: yAxisTickInterval,
       min: 0,
+      labels: { formatter },
     },
     series,
     legend,
