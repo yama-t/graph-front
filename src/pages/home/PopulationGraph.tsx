@@ -27,6 +27,9 @@ export default function PopuLationGraph() {
   const [prefecturesPopulation, setPrefecturesPopulation] = useState<
     PrefecturePopulation[]
   >([]);
+  const [prefecturesPopulationCache, setPrefecturesPopulationCache] = useState<
+    PrefecturePopulation[]
+  >([]);
 
   const getPrefectures = async () => {
     const response = await fetch(getPrefecturesUrl, {
@@ -50,11 +53,27 @@ export default function PopuLationGraph() {
 
     // チェックを付けた場合だけ人口を取得する
     if (checked) {
+      const cache = findCache(prefCode);
+      // キャッシュがある場合はキャッシュからデータを取り出して適用する
+      if (cache) {
+        const newPrefecturesPopulation = [...prefecturesPopulation, cache];
+        setPrefecturesPopulation(newPrefecturesPopulation);
+        setCheckFlag(false);
+        return;
+      }
       getPopulation(prefName, prefCode);
     } else {
       // チェックを外した場合はデータを取り除く
       removePopulation(prefCode);
     }
+  };
+
+  const findCache = function (
+    prefCode: PrefCode
+  ): PrefecturePopulation | undefined {
+    return prefecturesPopulationCache.find(
+      (data) => data.prefCode === prefCode
+    );
   };
 
   const getPopulation = async (prefName: PrefName, prefCode: PrefCode) => {
@@ -95,7 +114,14 @@ export default function PopuLationGraph() {
       ...prefecturesPopulation,
       newPopulationData,
     ];
+    const newPrefecturesPopulationCache = [
+      ...prefecturesPopulationCache,
+      newPopulationData,
+    ];
+    // グラフに使用するデータのセット
     setPrefecturesPopulation(newPrefecturesPopulation);
+    // キャッシュデータのセット
+    setPrefecturesPopulationCache(newPrefecturesPopulationCache);
     setCheckFlag(false);
   };
 
