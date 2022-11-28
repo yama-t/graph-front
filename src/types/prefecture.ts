@@ -1,7 +1,5 @@
 type PrefCode = number;
 type PrefName = string;
-type Prefectures = Array<Prefecture>;
-type PrefCodes = Array<PrefCode>;
 
 interface Prefecture {
   prefCode: PrefCode;
@@ -23,8 +21,6 @@ export type {
   PrefCode,
   PrefName,
   Prefecture,
-  Prefectures,
-  PrefCodes,
   PrefecturePopulation,
   Population,
 };
