@@ -57,6 +57,7 @@ export default function PopuLationGraph() {
       // キャッシュがある場合はキャッシュからデータを取り出して適用する
       if (cache) {
         const newPrefecturesPopulation = [...prefecturesPopulation, cache];
+        sortPrefecturesPopulation(newPrefecturesPopulation);
         setPrefecturesPopulation(newPrefecturesPopulation);
         setCheckFlag(false);
         return;
@@ -99,6 +100,13 @@ export default function PopuLationGraph() {
     };
   };
 
+  // prefCodeの昇順ソート
+  const sortPrefecturesPopulation = function (
+    prefecturesPopulation: PrefecturePopulation[]
+  ): void {
+    prefecturesPopulation.sort((a, b) => a.prefCode - b.prefCode);
+  };
+
   const addPopulation = function (
     prefName: PrefName,
     prefCode: PrefCode,
@@ -118,6 +126,7 @@ export default function PopuLationGraph() {
       ...prefecturesPopulationCache,
       newPopulationData,
     ];
+    sortPrefecturesPopulation(newPrefecturesPopulation);
     // グラフに使用するデータのセット
     setPrefecturesPopulation(newPrefecturesPopulation);
     // キャッシュデータのセット
