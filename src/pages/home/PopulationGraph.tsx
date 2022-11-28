@@ -5,21 +5,13 @@ import {
   PrefCode,
   PrefecturePopulation,
 } from "@/types/prefecture";
-import {
-  ResasPrefecturesResponses,
-  ResasPopulationResponses,
-  ResasPopulationResult,
-} from "@/types/resasApi";
+import { ResasPopulationResult } from "@/types/resasApi";
+import ResasApi from "@/lib/resasApi";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
 import Graph from "./Graph";
 import "./PopulationGraph.css";
 
-const apiEndPoint = "https://opendata.resas-portal.go.jp";
 const apiKey = import.meta.env.VITE_RESAS_API_KEY;
-const getPrefecturesApi = "/api/v1/prefectures";
-const getPrefecturesUrl = apiEndPoint + getPrefecturesApi;
-const getPopulationApi = "/api/v1/population/composition/perYear";
-const getPopulationUrl = apiEndPoint + getPopulationApi;
 
 export default function PopuLationGraph() {
   const [checkFlag, setCheckFlag] = useState(false);
@@ -32,10 +24,7 @@ export default function PopuLationGraph() {
   >([]);
 
   const getPrefectures = async () => {
-    const response = await fetch(getPrefecturesUrl, {
-      headers: { "X-API-KEY": apiKey },
-    });
-    const jsonData: ResasPrefecturesResponses = await response.json();
+    const jsonData = await ResasApi.getPrefectures(apiKey);
     setPrefectures(jsonData.result);
   };
 
@@ -78,12 +67,7 @@ export default function PopuLationGraph() {
   };
 
   const getPopulation = async (prefName: PrefName, prefCode: PrefCode) => {
-    const params = new URLSearchParams({ prefCode: `${prefCode}` });
-    const getUrl = `${getPopulationUrl}?${params}`;
-    const response = await fetch(getUrl, {
-      headers: { "X-API-KEY": apiKey },
-    });
-    const jsonData: ResasPopulationResponses = await response.json();
+    const jsonData = await ResasApi.getPopulation(prefCode, apiKey);
     addPopulation(prefName, prefCode, jsonData.result);
   };
 
