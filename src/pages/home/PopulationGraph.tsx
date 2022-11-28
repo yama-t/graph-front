@@ -79,12 +79,10 @@ export default function PopuLationGraph() {
   };
 
   const removePopulation = function (prefCode: PrefCode) {
-    // prefCodeが一致するデータを取り除く
-    const index = prefecturesPopulation.findIndex(
-      (item) => item.prefCode === prefCode
+    // prefCodeが一致するデータを取り除く（一致しないものだけ残す）
+    const newPrefecturesPopulation = prefecturesPopulation.filter(
+      (item) => item.prefCode !== prefCode
     );
-    const newPrefecturesPopulation = prefecturesPopulation.slice();
-    newPrefecturesPopulation.splice(index, 1);
     setPrefecturesPopulation(newPrefecturesPopulation);
   };
 
