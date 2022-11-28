@@ -1,7 +1,6 @@
 /* 見出し・セクション */
 .graph-contents {
   font-size: 14px;
-  padding: 18px 14px;
 }
 
 .graph-section + .graph-section {
@@ -33,6 +32,7 @@
   margin: 0;
   padding: 0;
   gap: 10px;
+  text-align: center;
 }
 
 .prefecture-item {
@@ -48,7 +48,6 @@
   border: solid 2px #494949;
   border-radius: 16px;
   padding: 10px 5px;
-  text-align: center;
 }
 
 .prefecture-checkbox:checked + .prefecture-label {
@@ -57,13 +56,22 @@
   color: #ffffff;
 }
 
+@media screen and (min-width: 769px) {
+  .graph-contents {
+    padding: 18px 14px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .prefecture-list {
     gap: 5px;
+    padding: 0 10px;
   }
 
   .prefecture-item {
     flex-basis: 105px;
+    flex-grow: 1;
+    max-width: 127px;
   }
 }
 
