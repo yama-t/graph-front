@@ -1,11 +1,16 @@
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { PrefecturePopulation } from "@/types/prefecture";
 
 const graphTitle = "";
 const seriesDefaultName = "都道府県名";
 const xAxisText = "年度";
 const yAxisText = "人口数";
+
+interface Props {
+  data: PrefecturePopulation[];
+}
 
 /*
 ## categories
@@ -26,7 +31,7 @@ const yAxisText = "人口数";
     ...
  ]
 */
-const createPopulationData = function (rawData) {
+const createPopulationData = function (rawData: PrefecturePopulation[]) {
   // X軸（年）
   const categories: Highcharts.XAxisOptions["categories"] = [];
   // Y軸（人口）
@@ -54,7 +59,7 @@ const createPopulationData = function (rawData) {
   return [categories, series];
 };
 
-export default function Graph({ data }) {
+export default function Graph({ data }: Props) {
   const [categories, series] = createPopulationData(data);
   const options: Highcharts.Options = {
     title: { text: graphTitle },
