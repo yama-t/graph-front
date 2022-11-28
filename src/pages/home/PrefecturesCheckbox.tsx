@@ -13,14 +13,14 @@ export default function PrefectureCheckbox({
   const inputName = "prefecture";
 
   if (!prefectures) {
-    return <ul className="prefectures"></ul>;
+    return <ul className="prefecture-list"></ul>;
   }
 
   const prefectureItems = prefectures.map((prefecture, i) => {
     const { prefName, prefCode } = prefecture;
     const inputId = `${inputName}${prefCode}`;
     return (
-      <li key={i} className="prefecture-items">
+      <li key={i} className="prefecture-item">
         <input
           type="checkbox"
           name={inputName}
@@ -35,5 +35,5 @@ export default function PrefectureCheckbox({
       </li>
     );
   });
-  return <ul className="prefectures">{prefectureItems}</ul>;
+  return <ul className="prefecture-list">{prefectureItems}</ul>;
 }
