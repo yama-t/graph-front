@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Prefectures, PrefName, PrefCode } from "@/types/prefecture";
+import {
+  Prefecture,
+  PrefName,
+  PrefCode,
+  PrefecturePopulation,
+} from "@/types/prefecture";
+import {
+  ResasPrefecturesResponses,
+  ResasPopulationResponses,
+  ResasPopulationResult,
+} from "@/types/resasApi";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
 import Graph from "./Graph";
 
@@ -11,14 +21,16 @@ const getPopulationApi = "/api/v1/population/composition/perYear";
 const getPopulationUrl = apiEndPoint + getPopulationApi;
 
 export default function PopuLationGraph() {
-  const [prefectures, setPrefectures] = useState<Prefectures>([]);
-  const [prefecturesPopulation, setPrefecturesPopulation] = useState([]);
+  const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
+  const [prefecturesPopulation, setPrefecturesPopulation] = useState<
+    PrefecturePopulation[]
+  >([]);
 
   const getPrefectures = async () => {
     const response = await fetch(getPrefecturesUrl, {
       headers: { "X-API-KEY": apiKey },
     });
-    const jsonData = await response.json();
+    const jsonData: ResasPrefecturesResponses = await response.json();
     setPrefectures(jsonData.result);
   };
 
@@ -44,14 +56,14 @@ export default function PopuLationGraph() {
     const response = await fetch(getUrl, {
       headers: { "X-API-KEY": apiKey },
     });
-    const jsonData = await response.json();
+    const jsonData: ResasPopulationResponses = await response.json();
     addPopulation(prefName, prefCode, jsonData.result);
   };
 
   const createPopulationData = function (
     prefName: PrefName,
     prefCode: PrefCode,
-    populationData
+    populationData: ResasPopulationResult
   ) {
     const totalPopulation = populationData?.data[0]?.data ?? [];
     return {
@@ -64,7 +76,7 @@ export default function PopuLationGraph() {
   const addPopulation = function (
     prefName: PrefName,
     prefCode: PrefCode,
-    populationData
+    populationData: ResasPopulationResult
   ) {
     // 都道府県名と都道府県コードを加えたデータを生成して配列に追加する
     const newPopulationData = createPopulationData(
