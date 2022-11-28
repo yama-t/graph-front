@@ -1,8 +1,8 @@
 import React from "react";
-import { Prefectures, PrefName, PrefCode } from "@/types/prefecture";
+import { Prefecture, PrefName, PrefCode } from "@/types/prefecture";
 
 interface Props {
-  prefectures: Prefectures;
+  prefectures: Prefecture[];
   onCnangeFunction: (prefName: PrefName, prefCode: PrefCode) => void;
 }
 
