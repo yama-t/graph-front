@@ -41,6 +41,8 @@ jobs:
         run: npm run test
       - name: Build
         run: npm run build
+        env:
+          VITE_RESAS_API_KEY: ${{ secrets.VITE_RESAS_API_KEY }}
       - name: Upload artifact
         # masterの場合のみ生成したファイルをアップロード
         if: github.ref == 'refs/heads/master'
