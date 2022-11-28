@@ -10,7 +10,7 @@ export default function PrefectureCheckbox({
   prefectures,
   onCnangeFunction,
 }: Props) {
-  const labelName = "prefecture";
+  const inputName = "prefecture";
 
   if (!prefectures) {
     return <ul className="prefectures"></ul>;
@@ -18,18 +18,18 @@ export default function PrefectureCheckbox({
 
   const prefectureItems = prefectures.map((prefecture, i) => {
     const { prefName, prefCode } = prefecture;
-    const labelId = `${labelName}${prefCode}`;
+    const inputId = `${inputName}${prefCode}`;
     return (
       <li key={i} className="prefecture-items">
         <input
           type="checkbox"
-          name={labelName}
-          id={labelId}
+          name={inputName}
+          id={inputId}
           value={prefCode}
           className="prefecture-checkbox"
           onChange={() => onCnangeFunction(prefName, prefCode)}
         />
-        <label className="prefecture-label" htmlFor={labelId}>
+        <label className="prefecture-label" htmlFor={inputId}>
           {prefName}
         </label>
       </li>
