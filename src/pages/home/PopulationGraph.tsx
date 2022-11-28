@@ -105,7 +105,7 @@ export default function PopuLationGraph() {
       </section>
       <section className="graph-section">
         <h2 className="section-title">人口推移</h2>
-        <Graph />
+        <Graph data={prefecturesPopulation} />
       </section>
     </>
   );
