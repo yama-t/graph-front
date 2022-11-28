@@ -8,4 +8,23 @@ interface Prefecture {
   prefName: PrefName;
 }
 
-export type { PrefCode, PrefName, Prefecture, Prefectures, PrefCodes };
+interface PrefecturePopulation {
+  data: Population[];
+  prefName: PrefName;
+  prefCode: PrefCode;
+}
+
+interface Population {
+  value: number;
+  year: number;
+}
+
+export type {
+  PrefCode,
+  PrefName,
+  Prefecture,
+  Prefectures,
+  PrefCodes,
+  PrefecturePopulation,
+  Population,
+};
