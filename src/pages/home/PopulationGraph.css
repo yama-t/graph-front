@@ -1,0 +1,79 @@
+/* 見出し・セクション */
+.graph-contents {
+  font-size: 14px;
+  padding: 18px 14px;
+}
+
+.graph-section + .graph-section {
+  margin-top: 10px;
+}
+
+.section-title {
+  font-size: 20px;
+  color: #494949;
+  border-left: solid 5px #7db4e6;
+  padding: 8px 10px;
+}
+
+.explain {
+  background-color: #f6f9f9;
+  border-radius: 3px;
+  color: #696969;
+  margin: 5px 0;
+  padding: 8px 14px;
+}
+
+/* 都道府県の選択 */
+
+.prefecture-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+}
+
+.prefecture-item {
+  flex-basis: 140px;
+}
+
+.prefecture-checkbox {
+  display: none;
+}
+
+.prefecture-label {
+  display: block;
+  border: solid 2px #494949;
+  border-radius: 16px;
+  padding: 10px 5px;
+  text-align: center;
+}
+
+.prefecture-checkbox:checked + .prefecture-label {
+  border-color: #7db4e6;
+  background-color: #7db4e6;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+  .prefecture-list {
+    gap: 5px;
+  }
+
+  .prefecture-item {
+    flex-basis: 105px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .prefecture-item {
+    flex-basis: 75px;
+  }
+}
+
+/* グラフ表示 */
+.graph {
+  padding-top: 20px;
+}

@@ -12,6 +12,7 @@ import {
 } from "@/types/resasApi";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
 import Graph from "./Graph";
+import "./PopulationGraph.css";
 
 const apiEndPoint = "https://opendata.resas-portal.go.jp";
 const apiKey = import.meta.env.VITE_RESAS_API_KEY;
@@ -104,7 +105,7 @@ export default function PopuLationGraph() {
   }, []);
 
   return (
-    <>
+    <div className="graph-contents">
       <section className="graph-section">
         <h2 className="section-title">都道府県</h2>
         <p className="explain">
@@ -119,6 +120,6 @@ export default function PopuLationGraph() {
         <h2 className="section-title">人口推移</h2>
         <Graph data={prefecturesPopulation} />
       </section>
-    </>
+    </div>
   );
 }
