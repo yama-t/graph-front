@@ -22,6 +22,7 @@ const getPopulationApi = "/api/v1/population/composition/perYear";
 const getPopulationUrl = apiEndPoint + getPopulationApi;
 
 export default function PopuLationGraph() {
+  const [checkFlag, setCheckFlag] = useState(false);
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [prefecturesPopulation, setPrefecturesPopulation] = useState<
     PrefecturePopulation[]
@@ -36,6 +37,13 @@ export default function PopuLationGraph() {
   };
 
   const checkPrefecture = function (prefName: PrefName, prefCode: PrefCode) {
+    // 連打対応。checkFlagが既にtrueの場合、処理を行わない
+    if (checkFlag) {
+      return;
+    }
+
+    setCheckFlag(true);
+
     // isChecked:true（値が配列に含まれていない）
     // isChecked:false（値が既に配列に含まれている）
     // 配列の要素がオブジェクトなので、someを使って判定
@@ -90,6 +98,7 @@ export default function PopuLationGraph() {
       newPopulationData,
     ];
     setPrefecturesPopulation(newPrefecturesPopulation);
+    setCheckFlag(false);
   };
 
   const removePopulation = function (prefCode: PrefCode) {
@@ -98,6 +107,7 @@ export default function PopuLationGraph() {
       (item) => item.prefCode !== prefCode
     );
     setPrefecturesPopulation(newPrefecturesPopulation);
+    setCheckFlag(false);
   };
 
   useEffect(() => {
