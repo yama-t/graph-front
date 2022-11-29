@@ -30,6 +30,16 @@ export const useCheckFlag = function () {
   };
 };
 
+export const setGraphData = function (
+  existingData: PrefecturePopulation[],
+  addData: PrefecturePopulation,
+  setState: React.Dispatch<React.SetStateAction<PrefecturePopulation[]>>
+) {
+  const newPopulationData = [...existingData, addData];
+  sortByPrefCode(newPopulationData);
+  setState(newPopulationData);
+};
+
 export default function PopuLationGraph() {
   const checkFlag = useCheckFlag();
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
@@ -52,9 +62,7 @@ export default function PopuLationGraph() {
     // checkedかつキャッシュがある場合は、キャッシュからデータを取り出して適用する
     const cache = prefecturesPopulationCache.get(prefCode);
     if (checked && cache) {
-      const newPrefecturesPopulation = [...prefecturesPopulation, cache];
-      sortByPrefCode(newPrefecturesPopulation);
-      setPrefecturesPopulation(newPrefecturesPopulation);
+      setGraphData(prefecturesPopulation, cache, setPrefecturesPopulation);
       return;
     }
 
@@ -89,13 +97,11 @@ export default function PopuLationGraph() {
       prefCode,
       populationData
     );
-    const newPrefecturesPopulation = [
-      ...prefecturesPopulation,
+    setGraphData(
+      prefecturesPopulation,
       newPopulationData,
-    ];
-    sortByPrefCode(newPrefecturesPopulation);
-    // グラフに使用するデータのセット
-    setPrefecturesPopulation(newPrefecturesPopulation);
+      setPrefecturesPopulation
+    );
     // キャッシュデータのセット
     const newPrefecturesPopulationCache = new Map(prefecturesPopulationCache);
     newPrefecturesPopulationCache.set(prefCode, newPopulationData);
