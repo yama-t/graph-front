@@ -2,7 +2,7 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { PrefecturePopulation } from "@/types/prefecture";
-import { createHighchartsPopulationData } from "@/lib/graph";
+import { createHighchartsSeries } from "@/lib/graph";
 
 const graphTitle = "";
 const seriesDefaultName = "都道府県名";
@@ -35,10 +35,7 @@ interface Props {
 }
 
 export default function Graph({ data }: Props) {
-  const { categories, series } = createHighchartsPopulationData(
-    data,
-    seriesDefaultName
-  );
+  const series = createHighchartsSeries(data, seriesDefaultName);
   const options: Highcharts.Options = {
     title: { text: graphTitle },
     chart: {
@@ -46,7 +43,6 @@ export default function Graph({ data }: Props) {
     },
     xAxis: {
       title: { text: xAxisText },
-      categories,
       max: maxYear,
       tickInterval: xAxisTickInterval,
     },

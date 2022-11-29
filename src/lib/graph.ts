@@ -2,11 +2,6 @@ import Highcharts from "highcharts";
 import { PrefName, PrefCode, PrefecturePopulation } from "@/types/prefecture";
 import { ResasPopulationResult } from "@/types/resasApi";
 
-interface PopulationData {
-  categories: Highcharts.XAxisOptions["categories"];
-  series: Highcharts.SeriesOptionsType[];
-}
-
 // prefCodeの昇順ソート
 const sortByPrefCode = function (
   prefecturesPopulation: PrefecturePopulation[]
@@ -36,9 +31,6 @@ const createPopulationDataWithPrefecture = function (
 };
 
 /*
-## categories
-["1960", "1965", "1970", "1975", "1980"]...
-
 ## series
  [
     {
@@ -54,12 +46,10 @@ const createPopulationDataWithPrefecture = function (
     ...
  ]
 */
-const createHighchartsPopulationData = function (
+const createHighchartsSeries = function (
   rawData: PrefecturePopulation[],
   seriesDefaultName = ""
-): PopulationData {
-  // X軸（年）
-  const categories: Highcharts.XAxisOptions["categories"] = [];
+): Highcharts.SeriesOptionsType[] {
   // Y軸（人口）
   let series: Highcharts.SeriesOptionsType[] = [];
 
@@ -68,7 +58,6 @@ const createHighchartsPopulationData = function (
 
     for (const population of rd.data) {
       data.push(population.value);
-      categories.push(String(population.year));
     }
 
     series.push({
@@ -77,17 +66,16 @@ const createHighchartsPopulationData = function (
       data,
     });
   }
-
   if (series.length === 0) {
     series = [{ type: "line", name: seriesDefaultName, data: [] }];
   }
 
-  return { categories, series };
+  return series;
 };
 
 export {
   sortByPrefCode,
   removeByPrefCode,
   createPopulationDataWithPrefecture,
-  createHighchartsPopulationData,
+  createHighchartsSeries,
 };
