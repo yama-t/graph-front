@@ -1,10 +1,24 @@
 import Highcharts from "highcharts";
-import { PrefecturePopulation } from "@/types/prefecture";
+import { PrefName, PrefCode, PrefecturePopulation } from "@/types/prefecture";
+import { ResasPopulationResult } from "@/types/resasApi";
 
 interface PopulationData {
   categories: Highcharts.XAxisOptions["categories"];
   series: Highcharts.SeriesOptionsType[];
 }
+
+const createPopulationDataWithPrefecture = function (
+  prefName: PrefName,
+  prefCode: PrefCode,
+  populationData: ResasPopulationResult
+) {
+  const totalPopulation = populationData?.data[0]?.data ?? [];
+  return {
+    prefName,
+    prefCode,
+    data: totalPopulation,
+  };
+};
 
 /*
 ## categories
@@ -56,4 +70,4 @@ const createHighchartsPopulationData = function (
   return { categories, series };
 };
 
-export { createHighchartsPopulationData };
+export { createPopulationDataWithPrefecture, createHighchartsPopulationData };

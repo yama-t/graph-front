@@ -7,6 +7,7 @@ import {
 } from "@/types/prefecture";
 import { ResasPopulationResult } from "@/types/resasApi";
 import ResasApi from "@/lib/resasApi";
+import { createPopulationDataWithPrefecture } from "@/lib/graph";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
 import Graph from "./Graph";
 import "./PopulationGraph.css";
@@ -75,19 +76,6 @@ export default function PopuLationGraph() {
     addPopulation(prefName, prefCode, jsonData.result);
   };
 
-  const createPopulationData = function (
-    prefName: PrefName,
-    prefCode: PrefCode,
-    populationData: ResasPopulationResult
-  ) {
-    const totalPopulation = populationData?.data[0]?.data ?? [];
-    return {
-      prefName,
-      prefCode,
-      data: totalPopulation,
-    };
-  };
-
   // prefCodeの昇順ソート
   const sortPrefecturesPopulation = function (
     prefecturesPopulation: PrefecturePopulation[]
@@ -101,7 +89,7 @@ export default function PopuLationGraph() {
     populationData: ResasPopulationResult
   ) {
     // 都道府県名と都道府県コードを加えたデータを生成して配列に追加する
-    const newPopulationData = createPopulationData(
+    const newPopulationData = createPopulationDataWithPrefecture(
       prefName,
       prefCode,
       populationData
