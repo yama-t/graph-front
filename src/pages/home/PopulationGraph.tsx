@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Prefecture,
   PrefName,
@@ -15,8 +15,19 @@ type PrefecturePopulationCache = Map<number, PrefecturePopulation>;
 
 const apiKey = import.meta.env.VITE_RESAS_API_KEY;
 
+export const useCheckFlag = function () {
+  const [flag, setFlag] = useState(false);
+  const on = useCallback(() => setFlag(true), []);
+  const off = useCallback(() => setFlag(false), []);
+  return {
+    flag,
+    on,
+    off,
+  };
+};
+
 export default function PopuLationGraph() {
-  const [checkFlag, setCheckFlag] = useState(false);
+  const checkFlag = useCheckFlag();
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [prefecturesPopulation, setPrefecturesPopulation] = useState<
     PrefecturePopulation[]
@@ -35,11 +46,11 @@ export default function PopuLationGraph() {
     prefCode: PrefCode
   ) {
     // 連打対応。checkFlagが既にtrueの場合、処理を行わない
-    if (checkFlag) {
+    if (checkFlag.flag) {
       return;
     }
 
-    setCheckFlag(true);
+    checkFlag.on();
 
     // チェックを付けた場合だけ人口を取得する
     if (checked) {
@@ -49,7 +60,7 @@ export default function PopuLationGraph() {
         const newPrefecturesPopulation = [...prefecturesPopulation, cache];
         sortPrefecturesPopulation(newPrefecturesPopulation);
         setPrefecturesPopulation(newPrefecturesPopulation);
-        setCheckFlag(false);
+        checkFlag.off();
         return;
       }
       getPopulation(prefName, prefCode);
@@ -106,7 +117,7 @@ export default function PopuLationGraph() {
     const newPrefecturesPopulationCache = new Map(prefecturesPopulationCache);
     newPrefecturesPopulationCache.set(prefCode, newPopulationData);
     setPrefecturesPopulationCache(newPrefecturesPopulationCache);
-    setCheckFlag(false);
+    checkFlag.off();
   };
 
   const removePopulation = function (prefCode: PrefCode) {
@@ -115,7 +126,7 @@ export default function PopuLationGraph() {
       (item) => item.prefCode !== prefCode
     );
     setPrefecturesPopulation(newPrefecturesPopulation);
-    setCheckFlag(false);
+    checkFlag.off();
   };
 
   useEffect(() => {
