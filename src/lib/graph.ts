@@ -14,6 +14,14 @@ const sortByPrefCode = function (
   prefecturesPopulation.sort((a, b) => a.prefCode - b.prefCode);
 };
 
+const removeByPrefCode = function (
+  prefecturesPopulation: PrefecturePopulation[],
+  prefCode: PrefCode
+) {
+  // prefCodeが一致するデータを取り除く（一致しないものだけ残す）
+  return prefecturesPopulation.filter((item) => item.prefCode !== prefCode);
+};
+
 const createPopulationDataWithPrefecture = function (
   prefName: PrefName,
   prefCode: PrefCode,
@@ -79,6 +87,7 @@ const createHighchartsPopulationData = function (
 
 export {
   sortByPrefCode,
+  removeByPrefCode,
   createPopulationDataWithPrefecture,
   createHighchartsPopulationData,
 };

@@ -9,6 +9,7 @@ import { ResasPopulationResult } from "@/types/resasApi";
 import ResasApi from "@/lib/resasApi";
 import {
   sortByPrefCode,
+  removeByPrefCode,
   createPopulationDataWithPrefecture,
 } from "@/lib/graph";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
@@ -89,7 +90,9 @@ export default function PopuLationGraph() {
       getPopulation(prefName, prefCode);
     } else {
       // チェックを外した場合はデータを取り除く
-      removePopulation(prefCode);
+      const removedData = removeByPrefCode(prefecturesPopulation, prefCode);
+      setPrefecturesPopulation(removedData);
+      checkFlag.off();
     }
   };
 
@@ -121,15 +124,6 @@ export default function PopuLationGraph() {
       newPopulationData,
       setPrefecturesPopulationCache
     );
-    checkFlag.off();
-  };
-
-  const removePopulation = function (prefCode: PrefCode) {
-    // prefCodeが一致するデータを取り除く（一致しないものだけ残す）
-    const newPrefecturesPopulation = prefecturesPopulation.filter(
-      (item) => item.prefCode !== prefCode
-    );
-    setPrefecturesPopulation(newPrefecturesPopulation);
     checkFlag.off();
   };
 
