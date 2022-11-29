@@ -11,7 +11,7 @@ const xAxisText = "年度";
 const yAxisText = "人口数";
 const pointStart = 1960; // 描画を始めるX軸の年度
 const maxYear = 2025; // X軸の最大値（年度）
-const pointInterval = 10; // グラフの点を描画する間隔（年）
+const pointInterval = 5; // グラフの点を描画する間隔（年）
 const xAxisTickInterval = 10; // X軸の目盛り間隔（年）
 const yAxisTickInterval = 1000000; // Y軸の目盛り間隔（人）
 
