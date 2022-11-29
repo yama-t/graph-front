@@ -49,24 +49,23 @@ export default function PopuLationGraph() {
     prefName: PrefName,
     prefCode: PrefCode
   ) {
+    // checkedかつキャッシュがある場合は、キャッシュからデータを取り出して適用する
+    const cache = prefecturesPopulationCache.get(prefCode);
+    if (checked && cache) {
+      const newPrefecturesPopulation = [...prefecturesPopulation, cache];
+      sortByPrefCode(newPrefecturesPopulation);
+      setPrefecturesPopulation(newPrefecturesPopulation);
+      return;
+    }
+
     // 連打対応。checkFlagが既にtrueの場合、処理を行わない
     if (checkFlag.flag) {
       return;
     }
-
     checkFlag.on();
 
     // チェックを付けた場合だけ人口を取得する
     if (checked) {
-      const cache = prefecturesPopulationCache.get(prefCode);
-      // キャッシュがある場合はキャッシュからデータを取り出して適用する
-      if (cache) {
-        const newPrefecturesPopulation = [...prefecturesPopulation, cache];
-        sortByPrefCode(newPrefecturesPopulation);
-        setPrefecturesPopulation(newPrefecturesPopulation);
-        checkFlag.off();
-        return;
-      }
       getPopulation(prefName, prefCode);
     } else {
       // チェックを外した場合はデータを取り除く
