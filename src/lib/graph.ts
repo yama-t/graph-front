@@ -25,7 +25,7 @@ interface PopulationData {
     ...
  ]
 */
-const createPopulationData = function (
+const createHighchartsPopulationData = function (
   rawData: PrefecturePopulation[],
   seriesDefaultName = ""
 ): PopulationData {
@@ -56,4 +56,4 @@ const createPopulationData = function (
   return { categories, series };
 };
 
-export { createPopulationData };
+export { createHighchartsPopulationData };
