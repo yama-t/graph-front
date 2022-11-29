@@ -72,7 +72,7 @@ export default function PopuLationGraph() {
     prefName: PrefName,
     prefCode: PrefCode
   ) {
-    // checkedかつキャッシュがある場合は、キャッシュからデータを取り出して適用する
+    // checkedかつキャッシュがある場合は、キャッシュからデータを取り出してグラフに適用する
     const cache = prefecturesPopulationCache.get(prefCode);
     if (checked && cache) {
       setGraphData(prefecturesPopulation, cache, setPrefecturesPopulation);
@@ -98,20 +98,13 @@ export default function PopuLationGraph() {
 
   const getPopulation = async (prefName: PrefName, prefCode: PrefCode) => {
     const jsonData = await ResasApi.getPopulation(prefCode, apiKey);
-    addPopulation(prefName, prefCode, jsonData.result);
-  };
-
-  const addPopulation = function (
-    prefName: PrefName,
-    prefCode: PrefCode,
-    populationData: ResasPopulationResult
-  ) {
     // 都道府県名と都道府県コードを加えたデータを生成して配列に追加する
     const newPopulationData = createPopulationDataWithPrefecture(
       prefName,
       prefCode,
-      populationData
+      jsonData.result
     );
+    // グラフ用データのセット
     setGraphData(
       prefecturesPopulation,
       newPopulationData,
