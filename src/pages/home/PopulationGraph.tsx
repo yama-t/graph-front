@@ -40,6 +40,18 @@ export const setGraphData = function (
   setState(newPopulationData);
 };
 
+// 取得した人口データをキャッシュする
+export const cachePopulation = function (
+  existCache: PrefecturePopulationCache,
+  prefCode: PrefCode,
+  addData: PrefecturePopulation,
+  setState: React.Dispatch<React.SetStateAction<PrefecturePopulationCache>>
+) {
+  const newCache = new Map(existCache);
+  newCache.set(prefCode, addData);
+  setState(newCache);
+};
+
 export default function PopuLationGraph() {
   const checkFlag = useCheckFlag();
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
@@ -103,9 +115,12 @@ export default function PopuLationGraph() {
       setPrefecturesPopulation
     );
     // キャッシュデータのセット
-    const newPrefecturesPopulationCache = new Map(prefecturesPopulationCache);
-    newPrefecturesPopulationCache.set(prefCode, newPopulationData);
-    setPrefecturesPopulationCache(newPrefecturesPopulationCache);
+    cachePopulation(
+      prefecturesPopulationCache,
+      prefCode,
+      newPopulationData,
+      setPrefecturesPopulationCache
+    );
     checkFlag.off();
   };
 
