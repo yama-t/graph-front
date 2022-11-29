@@ -2,7 +2,7 @@
 
 都道府県別の総人口推移グラフを表示する SPA
 
-## 環境構築
+## 環境構築・フォルダ構成
 
 [wiki](https://github.com/yama-t/graph-front/wiki)に記載。
 
