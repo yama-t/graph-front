@@ -11,6 +11,8 @@ import PrefectureCheckbox from "./PrefecturesCheckbox";
 import Graph from "./Graph";
 import "./PopulationGraph.css";
 
+type PrefecturePopulationCache = Map<number, PrefecturePopulation>;
+
 const apiKey = import.meta.env.VITE_RESAS_API_KEY;
 
 export default function PopuLationGraph() {
@@ -19,9 +21,8 @@ export default function PopuLationGraph() {
   const [prefecturesPopulation, setPrefecturesPopulation] = useState<
     PrefecturePopulation[]
   >([]);
-  const [prefecturesPopulationCache, setPrefecturesPopulationCache] = useState<
-    PrefecturePopulation[]
-  >([]);
+  const [prefecturesPopulationCache, setPrefecturesPopulationCache] =
+    useState<PrefecturePopulationCache>(new Map());
 
   const getPrefectures = async () => {
     const jsonData = await ResasApi.getPrefectures(apiKey);
@@ -42,7 +43,7 @@ export default function PopuLationGraph() {
 
     // チェックを付けた場合だけ人口を取得する
     if (checked) {
-      const cache = findCache(prefCode);
+      const cache = prefecturesPopulationCache.get(prefCode);
       // キャッシュがある場合はキャッシュからデータを取り出して適用する
       if (cache) {
         const newPrefecturesPopulation = [...prefecturesPopulation, cache];
@@ -56,14 +57,6 @@ export default function PopuLationGraph() {
       // チェックを外した場合はデータを取り除く
       removePopulation(prefCode);
     }
-  };
-
-  const findCache = function (
-    prefCode: PrefCode
-  ): PrefecturePopulation | undefined {
-    return prefecturesPopulationCache.find(
-      (data) => data.prefCode === prefCode
-    );
   };
 
   const getPopulation = async (prefName: PrefName, prefCode: PrefCode) => {
@@ -106,14 +99,12 @@ export default function PopuLationGraph() {
       ...prefecturesPopulation,
       newPopulationData,
     ];
-    const newPrefecturesPopulationCache = [
-      ...prefecturesPopulationCache,
-      newPopulationData,
-    ];
     sortPrefecturesPopulation(newPrefecturesPopulation);
     // グラフに使用するデータのセット
     setPrefecturesPopulation(newPrefecturesPopulation);
     // キャッシュデータのセット
+    const newPrefecturesPopulationCache = new Map(prefecturesPopulationCache);
+    newPrefecturesPopulationCache.set(prefCode, newPopulationData);
     setPrefecturesPopulationCache(newPrefecturesPopulationCache);
     setCheckFlag(false);
   };
