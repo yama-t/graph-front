@@ -7,7 +7,10 @@ import {
 } from "@/types/prefecture";
 import { ResasPopulationResult } from "@/types/resasApi";
 import ResasApi from "@/lib/resasApi";
-import { createPopulationDataWithPrefecture } from "@/lib/graph";
+import {
+  sortByPrefCode,
+  createPopulationDataWithPrefecture,
+} from "@/lib/graph";
 import PrefectureCheckbox from "./PrefecturesCheckbox";
 import Graph from "./Graph";
 import "./PopulationGraph.css";
@@ -59,7 +62,7 @@ export default function PopuLationGraph() {
       // キャッシュがある場合はキャッシュからデータを取り出して適用する
       if (cache) {
         const newPrefecturesPopulation = [...prefecturesPopulation, cache];
-        sortPrefecturesPopulation(newPrefecturesPopulation);
+        sortByPrefCode(newPrefecturesPopulation);
         setPrefecturesPopulation(newPrefecturesPopulation);
         checkFlag.off();
         return;
@@ -74,13 +77,6 @@ export default function PopuLationGraph() {
   const getPopulation = async (prefName: PrefName, prefCode: PrefCode) => {
     const jsonData = await ResasApi.getPopulation(prefCode, apiKey);
     addPopulation(prefName, prefCode, jsonData.result);
-  };
-
-  // prefCodeの昇順ソート
-  const sortPrefecturesPopulation = function (
-    prefecturesPopulation: PrefecturePopulation[]
-  ): void {
-    prefecturesPopulation.sort((a, b) => a.prefCode - b.prefCode);
   };
 
   const addPopulation = function (
@@ -98,7 +94,7 @@ export default function PopuLationGraph() {
       ...prefecturesPopulation,
       newPopulationData,
     ];
-    sortPrefecturesPopulation(newPrefecturesPopulation);
+    sortByPrefCode(newPrefecturesPopulation);
     // グラフに使用するデータのセット
     setPrefecturesPopulation(newPrefecturesPopulation);
     // キャッシュデータのセット

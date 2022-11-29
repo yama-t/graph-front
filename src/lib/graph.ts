@@ -7,6 +7,13 @@ interface PopulationData {
   series: Highcharts.SeriesOptionsType[];
 }
 
+// prefCodeの昇順ソート
+const sortByPrefCode = function (
+  prefecturesPopulation: PrefecturePopulation[]
+): void {
+  prefecturesPopulation.sort((a, b) => a.prefCode - b.prefCode);
+};
+
 const createPopulationDataWithPrefecture = function (
   prefName: PrefName,
   prefCode: PrefCode,
@@ -70,4 +77,8 @@ const createHighchartsPopulationData = function (
   return { categories, series };
 };
 
-export { createPopulationDataWithPrefecture, createHighchartsPopulationData };
+export {
+  sortByPrefCode,
+  createPopulationDataWithPrefecture,
+  createHighchartsPopulationData,
+};
