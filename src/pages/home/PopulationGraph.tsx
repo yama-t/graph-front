@@ -5,7 +5,6 @@ import {
   PrefCode,
   PrefecturePopulation,
 } from "@/types/prefecture";
-import { ResasPopulationResult } from "@/types/resasApi";
 import ResasApi from "@/lib/resasApi";
 import {
   sortByPrefCode,
