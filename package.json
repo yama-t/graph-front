@@ -28,6 +28,7 @@
     "@typescript-eslint/parser": "^5.44.0",
     "@vitejs/plugin-react": "^2.2.0",
     "@vitest/coverage-c8": "^0.25.3",
+    "cross-fetch": "^3.1.5",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-react": "^7.31.11",
     "happy-dom": "^7.7.0",
