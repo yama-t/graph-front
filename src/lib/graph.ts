@@ -53,27 +53,19 @@ const createHighchartsSeries = function (
   rawData: PrefecturePopulation[],
   seriesDefaultName = ""
 ): Highcharts.SeriesOptionsType[] {
-  // Y軸（人口）
-  let series: Highcharts.SeriesOptionsType[] = [];
-
-  for (const rd of rawData) {
-    const data = [];
-
-    for (const population of rd.data) {
-      data.push(population.value);
-    }
-
-    series.push({
-      type: "line",
-      name: rd.prefName,
+  // データがない場合は初期表示を設定
+  if (rawData.length === 0) {
+    return [{ type: "line", name: seriesDefaultName, data: [] }];
+  }
+  // seriesを生成
+  return rawData.map((item) => {
+    const data = item.data.map((population) => population.value);
+    return {
       data,
-    });
-  }
-  if (series.length === 0) {
-    series = [{ type: "line", name: seriesDefaultName, data: [] }];
-  }
-
-  return series;
+      name: item.prefName,
+      type: "line",
+    };
+  });
 };
 
 export {
