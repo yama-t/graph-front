@@ -19,7 +19,11 @@ type PrefecturePopulationCache = Map<number, PrefecturePopulation>;
 
 const apiKey = import.meta.env.VITE_RESAS_API_KEY;
 
-export const useCheckFlag = function () {
+export const useCheckFlag = function (): {
+  flag: boolean;
+  on: () => void;
+  off: () => void;
+} {
   const [flag, setFlag] = useState(false);
   const on = useCallback(() => setFlag(true), []);
   const off = useCallback(() => setFlag(false), []);
@@ -34,7 +38,7 @@ export const setGraphData = function (
   existingData: PrefecturePopulation[],
   addData: PrefecturePopulation,
   setState: React.Dispatch<React.SetStateAction<PrefecturePopulation[]>>
-) {
+): void {
   const newPopulationData = [...existingData, addData];
   sortByPrefCode(newPopulationData);
   setState(newPopulationData);
@@ -46,7 +50,7 @@ export const cachePopulation = function (
   prefCode: PrefCode,
   addData: PrefecturePopulation,
   setState: React.Dispatch<React.SetStateAction<PrefecturePopulationCache>>
-) {
+): void {
   const newCache = new Map(existCache);
   newCache.set(prefCode, addData);
   setState(newCache);
@@ -95,7 +99,10 @@ export default function PopuLationGraph() {
     }
   };
 
-  const getPopulation = async (prefName: PrefName, prefCode: PrefCode) => {
+  const getPopulation = async (
+    prefName: PrefName,
+    prefCode: PrefCode
+  ): Promise<void> => {
     const jsonData = await ResasApi.getPopulation(prefCode, apiKey);
     // 都道府県名と都道府県コードを加えたデータを生成して配列に追加する
     const newPopulationData = createPopulationDataWithPrefecture(
