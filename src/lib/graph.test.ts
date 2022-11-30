@@ -9,7 +9,7 @@ test("sortByPrefCode", () => {
   expect(prefCodes).toMatchObject([9, 16, 23, 26]);
 });
 
-test("sortByPrefCode", () => {
+test("removeByPrefCode", () => {
   const prefCode = 16;
   const data = prefecturesPopulation.slice();
   const removedData = removeByPrefCode(data, prefCode);
