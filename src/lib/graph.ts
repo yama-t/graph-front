@@ -1,6 +1,9 @@
 import Highcharts from "highcharts";
 import { PrefName, PrefCode, PrefecturePopulation } from "@/types/prefecture";
-import { ResasPopulationResult } from "@/types/resasApi";
+import {
+  ResasPopulationResult,
+  ResasPopulationPerYear,
+} from "@/types/resasApi";
 
 // prefCodeの昇順ソート
 const sortByPrefCode = function (
@@ -12,7 +15,7 @@ const sortByPrefCode = function (
 const removeByPrefCode = function (
   prefecturesPopulation: PrefecturePopulation[],
   prefCode: PrefCode
-) {
+): PrefecturePopulation[] {
   // prefCodeが一致するデータを取り除く（一致しないものだけ残す）
   return prefecturesPopulation.filter((item) => item.prefCode !== prefCode);
 };
@@ -21,7 +24,7 @@ const createPopulationDataWithPrefecture = function (
   prefName: PrefName,
   prefCode: PrefCode,
   populationData: ResasPopulationResult
-) {
+): { prefName: string; prefCode: PrefCode; data: ResasPopulationPerYear[] } {
   const totalPopulation = populationData?.data[0]?.data ?? [];
   return {
     prefName,
